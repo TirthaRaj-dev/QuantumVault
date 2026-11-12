@@ -1,0 +1,15 @@
+<CodeBlock language="gitignore" editable>
+# Rust build files
+/target/
+Environment and secrets
+.env
+.env.*
+Temporary files and logs
+*.tmp
+*.log
+IDE settings
+.idea/
+Operating system files
+.DS_Store
+Thumbs.db
+</CodeBlock>

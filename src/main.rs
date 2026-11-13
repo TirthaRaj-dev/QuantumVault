@@ -1,29 +1,22 @@
-const APP_NAME: &str = "QuantumVault";
-const VERSION: &str = env!("CARGO_PKG_VERSION");
+mod cli;
+mod commands;
+
+use clap::Parser;
+use cli::Cli;
+use commands::Commands;
 
 fn main() {
-    println!("========================================");
-    println!("          {} CLI", APP_NAME);
-    println!("========================================");
+    let cli = Cli::parse();
 
-    println!("Application : {}", APP_NAME);
-    println!("Version     : {}", VERSION);
-    println!("Status      : Initializing...");
+    match cli.command {
+        Commands::Status => {
+            println!("QuantumVault status command selected.");
+            println!("Status functionality will be implemented on Day 3.");
+        }
 
-    println!("\nQuantumVault CLI is starting successfully.");
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn application_name_is_correct() {
-        assert_eq!(APP_NAME, "QuantumVault");
-    }
-
-    #[test]
-    fn application_version_is_not_empty() {
-        assert!(!VERSION.is_empty());
+        Commands::Init => {
+            println!("QuantumVault init command selected.");
+            println!("Vault initialization will be implemented on Day 4.");
+        }
     }
 }

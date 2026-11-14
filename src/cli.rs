@@ -42,7 +42,7 @@ mod tests {
     fn parses_init_command() {
         let cli = Cli::try_parse_from(["quantumvault", "init"]);
 
-        assert!(matches!(cli.unwrap().command, Commands::Init));
+        assert!(matches!(cli.unwrap().command, Commands::Init { .. }));
     }
 
     #[test]

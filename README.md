@@ -1,28 +1,38 @@
 
+## Week 1 – Day 4: Vault Initialization
 
-## Week 1 – Day 3: Basic CLI Commands
-
-Implemented the basic QuantumVault CLI command interfaces.
+Implemented the initial QuantumVault initialization functionality.
 
 ### Implemented features
-- Improved application heading and command output.
-- Added formatted help information.
-- Added application version display.
-- Implemented basic status output.
-- Added initialization command interface.
-- Added mount and unmount command interfaces.
-- Improved invalid command handling.
-- Added five unit tests for command parsing.
 
-### Available commands
+- Created the vault directory.
+- Created the data directory.
+- Generated an initial config.toml file.
+- Stored basic vault information.
+- Prevented overwriting an existing vault.
+- Added cleanup for incomplete initialization.
+- Added error handling for invalid paths.
+- Added unit tests for initialization and configuration.
+
+### Initial vault structure
 
 ```text
-quantumvault --help
-quantumvault --version
-quantumvault status
-quantumvault init
-quantumvault mount
-quantumvault unmount
+QuantumVault/
+├── vault/
+│   ├── config.toml
+│   └── data/
+├── src/
+│   ├── main.rs
+│   ├── cli.rs
+│   ├── vault.rs
+│   └── commands/
+└── Cargo.toml
 ```
 
-**Current limitation:** Vault initialization, persistent status detection, mounting, and unmounting are not yet implemented. These are planned for subsequent development and integration.
+### Security note
+
+No master password or cryptographic keys are stored in the configuration file.
+
+Password-based key derivation and secure key storage will be integrated in coordination with Member 3.
+
+This is an initial development structure. The final secure storage layout will be decided with the key-management and filesystem members.

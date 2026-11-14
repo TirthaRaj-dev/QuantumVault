@@ -1,5 +1,6 @@
 mod cli;
 mod commands;
+mod vault;
 
 use clap::Parser;
 use cli::Cli;
@@ -16,13 +17,21 @@ fn print_header() {
 
 fn run_command(command: Commands) {
     match command {
-        Commands::Init => {
+        Commands::Init { path } => {
             print_header();
-            println!("\nInitialization");
-            println!("--------------");
-            println!("Command       : init");
-            println!("Purpose       : Initialize a new secure vault");
-            println!("Implementation: Scheduled for Day 4");
+            println!("\nInitializing QuantumVault...\n");
+
+            // path is already a PathBuf.
+            match vault::initialize(&path) {
+                Ok(()) => {
+                    println!("\nQuantumVault initialized successfully!");
+                    println!("Vault location: {}", path.display());
+                }
+                Err(error) => {
+                    eprintln!("\nVault initialization failed: {}", error);
+                    std::process::exit(1);
+                }
+            }
         }
 
         Commands::Status => {
@@ -31,28 +40,21 @@ fn run_command(command: Commands) {
             println!("------------");
             println!("Application   : {}", APP_NAME);
             println!("Version       : {}", VERSION);
-            println!("Vault status  : Not yet initialized");
-            println!(
-                "Note          : Full vault status checking will be implemented with vault initialization."
-            );
+            println!("Note          : Persistent status detection is not yet implemented.");
         }
 
         Commands::Mount => {
             print_header();
             println!("\nMount Interface");
             println!("---------------");
-            println!("Command       : mount");
-            println!("Purpose       : Mount the secure vault");
-            println!("Implementation: Planned for filesystem integration.");
+            println!("Mounting will be implemented during filesystem integration.");
         }
 
         Commands::Unmount => {
             print_header();
             println!("\nUnmount Interface");
             println!("-----------------");
-            println!("Command       : unmount");
-            println!("Purpose       : Unmount the secure vault");
-            println!("Implementation: Planned for filesystem integration.");
+            println!("Unmounting will be implemented during filesystem integration.");
         }
     }
 }

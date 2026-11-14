@@ -1,11 +1,17 @@
 use clap::Subcommand;
 
-/// Available QuantumVault commands.
+/// Available QuantumVault CLI commands.
 #[derive(Debug, Subcommand)]
 pub enum Commands {
-    /// Display the current vault status.
+    /// Initialize a new secure vault.
+    Init,
+
+    /// Check the current vault status.
     Status,
 
-    /// Initialize a new QuantumVault vault.
-    Init,
+    /// Mount the secure vault.
+    Mount,
+
+    /// Unmount the secure vault.
+    Unmount,
 }

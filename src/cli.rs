@@ -2,16 +2,27 @@ use clap::Parser;
 
 use crate::commands::Commands;
 
-/// QuantumVault - Post-Quantum Secure Local Filesystem CLI.
+/// QuantumVault command-line interface.
 #[derive(Debug, Parser)]
 #[command(
     name = "quantumvault",
     version,
-    about = "QuantumVault: Post-Quantum Secure Local Filesystem",
-    long_about = "QuantumVault provides a command-line interface for managing a secure local filesystem protected by post-quantum cryptography."
+    about = "QuantumVault CLI",
+    long_about = "QuantumVault CLI\n\nA command-line interface for managing a secure local filesystem protected by post-quantum cryptography.",
+    help_template = "\
+{before-help}{name} {version}
+{about-with-newline}
+Usage: {usage}
+
+Available Commands:
+{subcommands}
+
+Options:
+{options}
+{after-help}"
 )]
 pub struct Cli {
-    /// Available commands.
+    /// Available QuantumVault commands.
     #[command(subcommand)]
     pub command: Commands,
 }
@@ -24,7 +35,6 @@ mod tests {
     fn parses_status_command() {
         let cli = Cli::try_parse_from(["quantumvault", "status"]);
 
-        assert!(cli.is_ok());
         assert!(matches!(cli.unwrap().command, Commands::Status));
     }
 
@@ -32,8 +42,21 @@ mod tests {
     fn parses_init_command() {
         let cli = Cli::try_parse_from(["quantumvault", "init"]);
 
-        assert!(cli.is_ok());
         assert!(matches!(cli.unwrap().command, Commands::Init));
+    }
+
+    #[test]
+    fn parses_mount_command() {
+        let cli = Cli::try_parse_from(["quantumvault", "mount"]);
+
+        assert!(matches!(cli.unwrap().command, Commands::Mount));
+    }
+
+    #[test]
+    fn parses_unmount_command() {
+        let cli = Cli::try_parse_from(["quantumvault", "unmount"]);
+
+        assert!(matches!(cli.unwrap().command, Commands::Unmount));
     }
 
     #[test]

@@ -1,38 +1,137 @@
 
-## Week 1 – Day 4: Vault Initialization
 
-Implemented the initial QuantumVault initialization functionality.
+# QuantumVault – Member 4 CLI
 
-### Implemented features
+## Week 1 – Day 5: Module Interfaces and Documentation
 
-- Created the vault directory.
-- Created the data directory.
-- Generated an initial config.toml file.
-- Stored basic vault information.
-- Prevented overwriting an existing vault.
-- Added cleanup for incomplete initialization.
-- Added error handling for invalid paths.
-- Added unit tests for initialization and configuration.
+### Features completed
 
-### Initial vault structure
+- Organized CLI command modules.
+- Separated initialization and status command logic.
+- Defined the cryptographic engine interface.
+- Defined the key-management interface.
+- Defined the filesystem mount/unmount interface.
+- Added a basic configuration model.
+- Added CLI argument parsing tests.
+- Documented installation and usage.
 
-```text
-QuantumVault/
-├── vault/
-│   ├── config.toml
-│   └── data/
-├── src/
-│   ├── main.rs
-│   ├── cli.rs
-│   ├── vault.rs
-│   └── commands/
-└── Cargo.toml
+## Requirements
+
+- Rust toolchain
+- Cargo
+- Git
+
+## Installation
+
+Clone the repository:
+
+```powershell
+git clone https://github.com/TirthaRaj-dev/QuantumVault.git
+cd QuantumVault
 ```
 
-### Security note
+Switch to the Member 4 branch:
 
-No master password or cryptographic keys are stored in the configuration file.
+```powershell
+git checkout member-4-cli-integration
+```
 
-Password-based key derivation and secure key storage will be integrated in coordination with Member 3.
+Build the application:
 
-This is an initial development structure. The final secure storage layout will be decided with the key-management and filesystem members.
+```powershell
+cargo build
+```
+
+Run tests:
+
+```powershell
+cargo test
+```
+
+## Usage
+
+Display help:
+
+```powershell
+cargo run -- --help
+```
+
+Display version:
+
+```powershell
+cargo run -- --version
+```
+
+Initialize the default vault:
+
+```powershell
+cargo run -- init
+```
+
+Initialize a custom vault:
+
+```powershell
+cargo run -- init --path test-vault
+```
+
+Check vault status:
+
+```powershell
+cargo run -- status
+```
+
+Mount and unmount command interfaces:
+
+```powershell
+cargo run -- mount
+cargo run -- unmount
+```
+
+## Integration Architecture
+
+### Member 1 – Cryptographic Engine
+
+File: `src/integration/crypto.rs`
+
+Expected responsibilities:
+- File encryption and decryption.
+- Cryptographic operations.
+- Secure integration with the CLI.
+
+### Member 2 – Filesystem / FUSE
+
+File: `src/integration/filesystem.rs`
+
+Expected responsibilities:
+- Mount the secure filesystem.
+- Unmount the secure filesystem.
+- Handle filesystem operations.
+
+### Member 3 – Key Management
+
+File: `src/integration/key_manager.rs`
+
+Expected responsibilities:
+- Key generation and management.
+- Master password handling.
+- Secure key derivation and storage.
+- Lock and unlock operations.
+
+### Member 4 – CLI Integration
+
+Responsibilities:
+- Command-line interface.
+- Vault initialization.
+- Command dispatch.
+- Integration between the other modules.
+- Error handling and testing.
+
+## Current Limitations
+
+The integration files currently define interfaces only.
+Actual cryptographic operations, key management, and FUSE
+mounting will be connected when the respective modules
+are provided by the other team members.
+
+The initial vault configuration does not contain plaintext
+master passwords or cryptographic keys.

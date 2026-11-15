@@ -1,3 +1,6 @@
+pub mod init;
+pub mod status;
+
 use clap::Subcommand;
 use std::path::PathBuf;
 

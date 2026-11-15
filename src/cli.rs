@@ -46,6 +46,18 @@ mod tests {
     }
 
     #[test]
+    fn parses_custom_init_path() {
+        let cli = Cli::try_parse_from(["quantumvault", "init", "--path", "test-vault"]).unwrap();
+
+        match cli.command {
+            Commands::Init { path } => {
+                assert_eq!(path, std::path::PathBuf::from("test-vault"));
+            }
+            _ => panic!("Expected Init command"),
+        }
+    }
+
+    #[test]
     fn parses_mount_command() {
         let cli = Cli::try_parse_from(["quantumvault", "mount"]);
 

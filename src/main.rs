@@ -1,5 +1,7 @@
 mod cli;
 mod commands;
+pub mod config;
+pub mod integration;
 mod vault;
 
 use clap::Parser;
@@ -13,48 +15,32 @@ fn print_header() {
     println!("========================================");
     println!("          {} CLI", APP_NAME);
     println!("========================================");
+    println!("Version: {}\n", VERSION);
 }
 
 fn run_command(command: Commands) {
+    print_header();
+
     match command {
         Commands::Init { path } => {
-            print_header();
-            println!("\nInitializing QuantumVault...\n");
-
-            // path is already a PathBuf.
-            match vault::initialize(&path) {
-                Ok(()) => {
-                    println!("\nQuantumVault initialized successfully!");
-                    println!("Vault location: {}", path.display());
-                }
-                Err(error) => {
-                    eprintln!("\nVault initialization failed: {}", error);
-                    std::process::exit(1);
-                }
+            if let Err(error) = commands::init::run(path) {
+                eprintln!("Error: {}", error);
+                std::process::exit(1);
             }
         }
 
         Commands::Status => {
-            print_header();
-            println!("\nVault Status");
-            println!("------------");
-            println!("Application   : {}", APP_NAME);
-            println!("Version       : {}", VERSION);
-            println!("Note          : Persistent status detection is not yet implemented.");
+            commands::status::run();
         }
 
         Commands::Mount => {
-            print_header();
-            println!("\nMount Interface");
-            println!("---------------");
-            println!("Mounting will be implemented during filesystem integration.");
+            println!("Mount interface");
+            println!("FUSE integration is pending.");
         }
 
         Commands::Unmount => {
-            print_header();
-            println!("\nUnmount Interface");
-            println!("-----------------");
-            println!("Unmounting will be implemented during filesystem integration.");
+            println!("Unmount interface");
+            println!("FUSE integration is pending.");
         }
     }
 }

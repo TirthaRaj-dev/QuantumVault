@@ -77,4 +77,23 @@ mod tests {
 
         assert!(cli.is_err());
     }
+
+    #[test]
+    fn parses_password_command() {
+        let cli = Cli::try_parse_from(["quantumvault", "password", "set"]).unwrap();
+
+        assert!(matches!(
+            cli.command,
+            Commands::Password {
+                command: crate::commands::PasswordCommands::Set
+            }
+        ));
+    }
+
+    #[test]
+    fn rejects_unknown_password_subcommand() {
+        let cli = Cli::try_parse_from(["quantumvault", "password", "unknown"]);
+
+        assert!(cli.is_err());
+    }
 }

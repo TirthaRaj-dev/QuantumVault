@@ -6,7 +6,7 @@ mod vault;
 
 use clap::Parser;
 use cli::Cli;
-use commands::Commands;
+use commands::{Commands, PasswordCommands};
 
 const APP_NAME: &str = "QuantumVault";
 const VERSION: &str = env!("CARGO_PKG_VERSION");
@@ -28,6 +28,15 @@ fn run_command(command: Commands) {
                 std::process::exit(1);
             }
         }
+
+        Commands::Password { command } => match command {
+            PasswordCommands::Set => {
+                if let Err(error) = commands::password::run() {
+                    eprintln!("Password setup failed: {}", error);
+                    std::process::exit(1);
+                }
+            }
+        },
 
         Commands::Status => {
             commands::status::run();

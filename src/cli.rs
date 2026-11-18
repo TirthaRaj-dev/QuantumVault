@@ -30,6 +30,7 @@ pub struct Cli {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::commands::PasswordCommands;
 
     #[test]
     fn parses_status_command() {
@@ -95,5 +96,17 @@ mod tests {
         let cli = Cli::try_parse_from(["quantumvault", "password", "unknown"]);
 
         assert!(cli.is_err());
+    }
+
+    #[test]
+    fn parses_password_verify_command() {
+        let cli = Cli::try_parse_from(["quantumvault", "password", "verify"]).unwrap();
+
+        assert!(matches!(
+            cli.command,
+            Commands::Password {
+                command: PasswordCommands::Verify
+            }
+        ));
     }
 }

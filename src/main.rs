@@ -36,6 +36,13 @@ fn run_command(command: Commands) {
                     std::process::exit(1);
                 }
             }
+
+            PasswordCommands::Verify => {
+                if let Err(error) = commands::password::verify() {
+                    eprintln!("Password verification failed: {}", error);
+                    std::process::exit(1);
+                }
+            }
         },
 
         Commands::Status => {

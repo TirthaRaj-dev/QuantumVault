@@ -1,7 +1,7 @@
 pub mod init;
+pub mod mount;
 pub mod password;
 pub mod status;
-
 use clap::Subcommand;
 use std::path::PathBuf;
 

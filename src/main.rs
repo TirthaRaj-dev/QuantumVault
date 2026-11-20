@@ -50,13 +50,17 @@ fn run_command(command: Commands) {
         }
 
         Commands::Mount => {
-            println!("Mount interface");
-            println!("FUSE integration is pending.");
+            if let Err(error) = commands::mount::run_mount() {
+                eprintln!("\nMount failed: {}", error);
+                std::process::exit(1);
+            }
         }
 
         Commands::Unmount => {
-            println!("Unmount interface");
-            println!("FUSE integration is pending.");
+            if let Err(error) = commands::mount::run_unmount() {
+                eprintln!("\nUnmount failed: {}", error);
+                std::process::exit(1);
+            }
         }
     }
 }

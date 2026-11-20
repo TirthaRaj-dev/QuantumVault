@@ -32,22 +32,30 @@ pub fn run() -> Result<(), Box<dyn Error>> {
 
 /// Interactive master password verification.
 pub fn verify() -> Result<(), Box<dyn Error>> {
+    verify_for_mount()?;
+    println!("\nMaster password verified successfully.");
+    Ok(())
+}
+
+/// Verify the master password before allowing a mount.
+pub fn verify_for_mount() -> io::Result<()> {
     let vault_path = Path::new(VAULT_PATH);
     ensure_vault_exists(vault_path)?;
+    println!("\nChecking authentication...");
 
-    println!("\nQuantumVault Password Verification\n");
-
-    let password = Zeroizing::new(rpassword::prompt_password("Enter master password: ")?);
+    let password = Zeroizing::new(
+        rpassword::prompt_password("Enter master password: ")
+            .map_err(|error| io::Error::other(error.to_string()))?,
+    );
 
     if verify_password(vault_path, &password)? {
-        println!("\nMaster password verified successfully.");
+        println!("Authentication successful.");
         Ok(())
     } else {
         Err(io::Error::new(
             io::ErrorKind::PermissionDenied,
             "Incorrect master password.",
-        )
-        .into())
+        ))
     }
 }
 

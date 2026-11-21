@@ -5,6 +5,7 @@ use std::path::Path;
 ///
 /// Actual encryption and decryption will be connected
 /// when the crypto module is provided by Member 1.
+#[allow(dead_code)]
 pub trait CryptoEngine {
     fn encrypt_file(&self, source: &Path, destination: &Path) -> io::Result<()>;
 
